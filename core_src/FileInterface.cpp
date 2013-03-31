@@ -4,9 +4,15 @@ namespace core
 {
 namespace file_interface
 {
-	FilePtr::FilePtr(std::string& _fl) : fl(_fl)
+	FilePtr::FilePtr(std::string* _fl) : fl(_fl)
 	{
 		uint8_t *ID_Table = new uint8_t[10];
+
+	}
+	FilePtr::FilePtr(const char * _file_name) : file(_file_name)
+	{
+		uint8_t *ID_Table = new uint8_t[10];
+		fl = 0;
 	}
 	FilePtr::~FilePtr()
 	{
@@ -26,5 +32,8 @@ namespace file_interface
 	{
 
 	};
+
+
+
 }
 }

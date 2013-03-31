@@ -1,10 +1,11 @@
 #ifndef FILEINTERFACE_H__
 #define FILEINTERFACE_H__
 
-#include <fstream>
-#include <iostream>
 #include <string>
 #include <inttypes.h>
+
+
+#include "core_FilePointer.h"
 
 namespace core
 {
@@ -34,10 +35,12 @@ namespace file_interface
 	class FilePtr : virtual public FileInterface
 	{
 	private: /*Data*/
-		std::string& fl;
+		std::string* fl;
 		uint8_t* ID_Table;
+		core::file_pointer::FilePointer file;
 	public:
-		FilePtr(std::string& _fl);
+		FilePtr(std::string* _fl);
+		FilePtr(const char * _file_name);
 		virtual ~FilePtr();
 		template <class Module> char getChar(Module* M) const;
 		template <class Module> std::string getString(Module* M) const;
