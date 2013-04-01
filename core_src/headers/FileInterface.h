@@ -7,6 +7,8 @@
 
 #include "core_FilePointer.h"
 
+#define MAX_MODULE_ACCESS 10
+
 namespace core
 {
 namespace file_interface
@@ -23,10 +25,10 @@ namespace file_interface
 			{}
 			virtual ~FileInterface()
 			{}
-			virtual char getChar() = 0;
-			virtual std::string getString() = 0;
-			virtual uint8_t getID() const = 0; //replace unsigned int with <uint_8>
-			virtual inline bool hasID() const = 0;
+			virtual char getChar(uint8_t ID) = 0 ;
+			virtual std::string getString(uint8_t ID) = 0;
+			virtual uint8_t getID() = 0;
+			virtual inline bool hasID(uint8_t ID) const = 0;
 
 
 	};
@@ -37,19 +39,18 @@ namespace file_interface
 	private: /*Data*/
 		std::string* fl;
 		uint8_t* ID_Table;
+		uint8_t free_cell;
 		core::file_pointer::FilePointer file;
 	public:
 		FilePtr(std::string* _fl);
 		FilePtr(const char * _file_name);
 		virtual ~FilePtr();
-		template <class Module> char getChar(Module* M) const;
-		template <class Module> std::string getString(Module* M) const;
-		template <class Module> uint8_t getID(Module* M) const;
-		template <class Module> bool hasID(Module* M) const;
+		char getChar(uint8_t ID);
+		std::string getString(uint8_t ID); //Return str due to first '/n' symbol 
+		uint8_t getID();
+		inline bool hasID(uint8_t ID) const { if(ID_Table[ID] == -1) return false; else return true;};
 	private: /*Methods*/
-		uint8_t hashStr(std::string Str) const;
-		uint8_t searchID(std::string Str) const;
-		void addNewID(std::string Str);
+		void initTable(uint8_t* ID_Table);
 		void increaseChr();
 		void increaseStr();
 
