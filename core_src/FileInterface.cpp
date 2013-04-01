@@ -58,6 +58,50 @@ namespace file_interface
 		return returnChar;
 	}
 
+	std::string FilePtr::getString(uint8_t ID)
+	{
+		if(!hasID(ID)) throw IDErr();
+		std::string returnString;
+		char tmpChar = '\t';
+		if(!fl)
+		{
+			while(tmpChar != '\n')
+			{
+				try
+				{
+					tmpChar = file.getChar(ID_Table[ID]);
+					returnString.push_back(tmpChar);
+					ID_Table[ID]++;
+				}
+				catch(file_pointer::EoFErr)
+				{
+					returnString.push_back('\n');
+					break;	
+				}
+			}
+		}
+		else
+		{
+			while(tmpChar != '\n')
+			{
+
+				if(ID_Table[ID] < (*fl).length()) 
+				{
+					tmpChar = (*fl)[ID_Table[ID]];
+					returnString.push_back(tmpChar);
+					ID_Table[ID]++;
+				}
+				else
+				{
+					returnString.push_back('\n');
+					break;
+				}
+			}
+		}
+		return returnString;
+
+	}
+
 
 
 }
