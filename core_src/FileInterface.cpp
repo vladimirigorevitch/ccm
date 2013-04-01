@@ -6,12 +6,13 @@ namespace file_interface
 {
 	FilePtr::FilePtr(std::string* _fl) : fl(_fl), free_cell(0)
 	{
-		uint8_t *ID_Table = new uint8_t[MAX_MODULE_ACCESS];
+		uint32_t *ID_Table = new uint32_t[MAX_MODULE_ACCESS];
+		initTable(ID_Table);
 
 	}
 	FilePtr::FilePtr(const char * _file_name) : fl(0), free_cell(0),  file(_file_name)
 	{
-		uint8_t *ID_Table = new uint8_t[MAX_MODULE_ACCESS];
+		uint32_t *ID_Table = new uint32_t[MAX_MODULE_ACCESS];
 		initTable(ID_Table);
 	}
 	FilePtr::~FilePtr()
@@ -19,7 +20,7 @@ namespace file_interface
 		delete[] ID_Table;
 	}
 
-	void FilePtr::initTable(uint8_t* ID_Table)
+	void FilePtr::initTable(uint32_t* ID_Table)
 	{
 		for(int i = 0; i < MAX_MODULE_ACCESS; i++) ID_Table[i] = -1;
 	}
