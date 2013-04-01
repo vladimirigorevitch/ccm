@@ -38,7 +38,7 @@ namespace file_interface
 	{
 	private: /*Data*/
 		std::string* fl;
-		uint8_t* ID_Table;
+		uint32_t* ID_Table;
 		uint8_t free_cell;
 		core::file_pointer::FilePointer file;
 	public:
@@ -50,7 +50,7 @@ namespace file_interface
 		uint8_t getID();
 		inline bool hasID(uint8_t ID) const { if(ID_Table[ID] == -1) return false; else return true;};
 	private: /*Methods*/
-		void initTable(uint8_t* ID_Table);
+		void initTable(uint32_t* ID_Table);
 		void increaseChr();
 		void increaseStr();
 
