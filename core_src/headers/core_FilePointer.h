@@ -1,8 +1,11 @@
+/* More or less safe class for file IO    */
+
 #ifndef CORE_FILEPOINTER_H__
 #define CORE_FILEPOINTER_H__
 
 
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <inttypes.h>
 
@@ -14,13 +17,13 @@ namespace file_pointer
 	{
 		private: /* Data */
 			uint32_t file_size;
-			std::FILE *fl;
+			std::ifstream fl;
  		public:
  			FilePointer();
 			FilePointer(const char * _fl_name);
 			~FilePointer();
-			char getChar(uint8_t offset) const;
-		private:
+			char getChar(uint8_t offset);
+		private: /*Methods*/
 			uint32_t getFileSize();			
 	};
 
