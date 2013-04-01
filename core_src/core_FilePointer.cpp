@@ -1,4 +1,3 @@
-
 #include "headers/core_FilePointer.h"
 
 namespace core
