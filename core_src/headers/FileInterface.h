@@ -1,6 +1,6 @@
 /*                                                                            *
 *Abstraction level for modules which need to have access to source code.      *
-*  Implementation should include class for working with src located in memory *
+*  Implementation should include  working with src located in memory          *
 *  and for working with src located in file                                   */
 
 
@@ -23,36 +23,24 @@ namespace file_interface
 	class FileInterface
 
 	{
-		public:
-			FileInterface()
-			{}
-			virtual ~FileInterface()
-			{}
-			virtual char getChar(uint8_t ID) = 0 ;
-			virtual std::string getString(uint8_t ID) = 0;
-			virtual uint8_t getID() = 0;
-			virtual inline bool hasID(uint8_t ID) const = 0;
-
-
-	};
-
-	/*Non multithread */
-	class FilePtr : virtual public FileInterface
-	{
 	private: /*Data*/
 		std::string* fl;
 		uint32_t* ID_Table;
 		uint8_t free_cell;
 		core::file_pointer::FilePointer file;
 	public:
-		FilePtr(std::string* _fl);
-		FilePtr(const char * _file_name);
-		virtual ~FilePtr();
+		FileInterface& createFS(std::string* _fl);
+		FileInterface& createFS(const char * _file_name);
 		char getChar(uint8_t ID);
 		std::string getString(uint8_t ID); //Return str due to first '/n' symbol or EOF
 		uint8_t getID();
 		inline bool hasID(uint8_t ID) const { if(ID_Table[ID] == -1) return false; else return true;};
 	private: /*Methods*/
+		virtual ~FileInterface();
+		FileInterface();
+		FileInterface(const FileInterface&);
+		FileInterface& operator=(const FileInterface&);
+		void initNewFS();
 		void initTable(uint32_t* ID_Table);
 		void increaseChr();
 		void increaseStr();
